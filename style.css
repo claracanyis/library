@@ -1,0 +1,101 @@
+:root {
+  --main-color: #040b16;
+  --main-soft-color: #1e242e;
+  --secondary-color: #e3a02b;
+  --neutral-color: #3c4047;
+  --white-color: #f4f5ee;
+}
+
+@font-face {
+  font-family: 'Ribeye';
+  src: url(./src/Ribeye-Regular.woff);
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url(./src/Roboto-VariableFont_wdth\,wght.woff);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  height: 20vh;
+  width: 100%;
+  background-color: var(--main-color);
+  color: var(--white-color);
+  font-family: 'Ribeye', monospace;
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+#btn-add-book {
+  height: 80px;
+  width: 80px;
+  border-radius: 40px;
+  border: none;
+  background-color: var(--secondary-color);
+  position: relative;
+  top: 20px;
+}
+
+#btn-add-book:hover {
+  background-color: hsl(38, 77%, 45%);
+}
+
+#btn-add-book:active {
+  background-color: var(--secondary-color);
+}
+
+main {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  overflow-y: auto;
+  background-color: var(--main-soft-color);
+}
+
+.book-showroom {
+  width: 1200px;
+  height: 100%;
+  padding: 60px 20px 0 20px;
+}
+
+.bookshelf {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-rows: 300px;
+  grid-auto-rows: 300px;
+  gap: 20px;
+}
+
+.book {
+  font-family: 'Roboto', Verdana, Geneva, Tahoma, sans-serif;
+  background-color: var(--neutral-color);
+  color: var(--white-color);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.book > p {
+  margin-top: 8px;
+}
+
+.book > p:first-child {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.book > p:nth-child(2) {
+  font-style: italic;
+}

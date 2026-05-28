@@ -4,17 +4,63 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Library App</title>
-  <link rel="./stylesheet" href="style.css">
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
   <header>
     <h1>Library App</h1>
-    <button><img src="" alt="Add icon">Add Book</button>
+    <button id="btn-add-book" command="show-modal" commandfor="add-book"><img src="./img/plus.svg" alt="Add icon"></button>
   </header>
 
-  <main id="library">
-
+  <main>
+    <div class="book-showroom">
+      <div class="bookshelf">
+      </div>
+    </div>
+    <dialog id="add-book">
+      <button id="close-dialog" commandfor="add-book" command="close">X</button>
+      <form action="">
+        <h2>New Book</h2>
+        <div>
+          <label for="title">Title</label>
+          <input type="text" name="title" id="book-title">
+        </div>
+        <div>
+          <label for="author">Author</label>
+          <input type="text" name="author" id="book-author">
+        </div>
+        <div>
+          <label for="pages">Pages</label>
+          <input type="number" name="pages" id="book-pages">
+        </div>
+        <div>
+          <label for="genre">Genre</label>
+          <select name="genre" id="book-genre">
+            <option value="fiction">-- Fiction --</option>
+            <option value="science-fiction">Science fiction</option>
+            <option value="fantasy">Fantasy</option>
+            <option value="romantasy">Romantasy</option>
+            <option value="romance">Romance</option>
+            <option value="child">Children's stories</option>
+            <option value="non-fiction">-- Non-fiction --</option>
+            <option value="autobiographical">Autobiographical</option>
+            <option value="self-improve">Self Improvement</option>
+          </select>
+        </div>
+        <div>
+          <label for="read">Already read?</label>
+          <input type="checkbox" name="read" id="book-read" switch>
+        </div>
+        <div>
+          <label for="rating">Rating</label>
+          <input type="range" name="rating" id="book-rating" min="0" max="5" step="1" value="0">
+        </div>
+        <button type="submit">Add Book</button>
+      </form>
+    </dialog>
   </main>
+
+ 
   <script src="./progr.js"></script>
 </body>
 </html>
