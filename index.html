@@ -9,7 +9,7 @@
 <body>
   <header>
     <h1>Library App</h1>
-    <button id="btn-add-book" command="show-modal" commandfor="add-book"><img src="./img/plus.svg" alt="Add icon"></button>
+    <button id="btn-add-book"><img src="./img/plus.svg" alt="Add icon"></button>
   </header>
 
   <main>
@@ -18,8 +18,8 @@
       </div>
     </div>
     <dialog id="add-book">
-      <button id="close-dialog" commandfor="add-book" command="close">X</button>
-      <form action="">
+      <button id="close-dialog">X</button>
+      <form id="new-book-form" action="submit">
         <h2>New Book</h2>
         <div>
           <label for="title">Title</label>
@@ -32,6 +32,10 @@
         <div>
           <label for="pages">Pages</label>
           <input type="number" name="pages" id="book-pages">
+        </div>
+        <div>
+          <label for="cover">Cover image</label>
+          <input type="url" name="cover" id="book-cover" placeholder="https://...">
         </div>
         <div>
           <label for="genre">Genre</label>
