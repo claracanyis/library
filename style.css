@@ -73,9 +73,9 @@ main {
 
 .bookshelf {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-template-rows: 400px;
-  grid-auto-rows: 400px;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 440px;
+  grid-auto-rows: 440px;
   gap: 20px;
 }
 
@@ -85,6 +85,7 @@ main {
   color: var(--white-color);
   padding: 20px;
   border-radius: 8px;
+  position: relative;
 }
 
 .book > p {
@@ -100,10 +101,24 @@ main {
   font-style: italic;
 }
 
-.book > img {
+.book-cover {
   width: 100%;
   height: 250px;
   object-fit: contain;
+}
+
+.delete-book {
+  height: 30px;
+  width: 30px;
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.delete-book:active {
+  background-color: var(--main-soft-color);
 }
 
 dialog {

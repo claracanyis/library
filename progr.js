@@ -17,6 +17,7 @@ function Book(title, author, pages, isRead, genre, rating, cover) {
   this.genre = genre;
   this.rating = rating;
   this.cover = cover;
+  this.id = crypto.randomUUID();
 }
 
 function addBookToLibrary(title, author, pages, isRead, rating = 0, cover = '', comments = '') {
@@ -32,11 +33,13 @@ function addArrayToApp(array) {
 
 function addBookToApp(book) {
   let newBook = document.createElement("div");
+  newBook.id = 'id_' + book.id;
   newBook.className = 'book';
 
   if (book.cover != '') {
     let newCover = document.createElement("img");
     newCover.setAttribute('src', book.cover);
+    newCover.className = 'book-cover';
     newBook.appendChild(newCover);
   }
 
@@ -49,11 +52,31 @@ function addBookToApp(book) {
   let newPages = document.createElement("p");
   newPages.textContent = book.pages + ' pages';
 
+  let btnDeleteBook = document.createElement("img");
+  btnDeleteBook.setAttribute('src', './img/trash.svg');
+  btnDeleteBook.setAttribute('data-book-id', book.id);
+  btnDeleteBook.className = 'delete-book';
   
   newBook.appendChild(newTitle);
   newBook.appendChild(newAuthor);
   newBook.appendChild(newPages);
+  newBook.appendChild(btnDeleteBook);
   bookshelf.appendChild(newBook);
+}
+
+bookshelf.addEventListener('click', appInteraction);
+function appInteraction(event) {
+  switch(event.target.className) {
+    case 'delete-book':
+      const bookID = event.target.getAttribute('data-book-id');
+      const targetBook = myLibrary.find(book => book.id === bookID);
+      myLibrary.splice(myLibrary.indexOf(targetBook),1);
+      document.querySelector("#id_" + bookID).remove();
+      break;
+    case 'toggle-read':
+      console.log('I toggle the property isRead from this book');
+      break;
+  }
 }
 
 function clearBookshelf() {
