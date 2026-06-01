@@ -116,6 +116,7 @@ dialog {
   border: none;
   border-radius: 4px;
   margin: auto;
+  position: relative;
 }
 
 dialog::backdrop {
@@ -140,7 +141,71 @@ form > div {
   gap: 30px;
 }
 
-form input {
+input[type="text"], input[type="number"], input[type="url"], input[type="checkbox"], select {
   height: 30px;
   width: 240px;
+}
+
+input[type="range"] {
+  --s: 40px; /* control the size*/
+  
+  --_c: var(--main-soft-color) 50%,var(--secondary-color) 0;
+  height: var(--s);
+  aspect-ratio: attr(max type(<integer>));
+  padding-inline: calc(var(--s)/2);
+  box-sizing: border-box;
+  mask: 
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 5 L79 95 L2 40 L98 40 L21 95 Z'/></svg>") 0/var(--s) var(--_m,);
+  appearance: none;
+  cursor: pointer;
+}
+input[type="range" i]::-webkit-slider-thumb{
+  width: 1px;
+  border-image: 
+    conic-gradient(at calc(50% + var(--s)/2),var(--_c))
+    fill 0//var(--s) calc(20*var(--s));
+  appearance: none;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 1px;
+  border-image: 
+    conic-gradient(at calc(50% + var(--s)/2),var(--_c))
+    fill 0//var(--s) calc(20*var(--s));
+  appearance: none;
+}
+input[type="range"]:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: -2px;
+  --_m:,conic-gradient(from 90deg at 2px 2px,#0000 25%,#000 0) 0 0/calc(100% - 2px) calc(100% - 2px);
+}
+
+button[type="submit"] {
+  height: 40px;
+  width: 200px;
+  margin: 10px auto;
+  font-size: 1.2rem;
+  background-color: var(--secondary-color);
+  border: none;
+}
+
+button[type="submit"]:hover {
+  background-color: hsl(38, 77%, 45%);
+}
+
+button[type="submit"]:active {
+  background-color: var(--secondary-color);
+}
+
+button#close-dialog {
+  background-color: transparent;
+  color: var(--white-color);
+  font-size: 1.5rem;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  border: none;
+}
+
+button#close-dialog:active {
+  color: var(--neutral-color);
 }
