@@ -133,6 +133,20 @@ input[type="range"].book-rating {
   height: 40px;
 }
 
+.book-genre {
+  display: none;
+}
+
+.book:hover .book-genre {
+  display: block;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-size: 0.8rem;
+  font-weight: lighter;
+  opacity: 0.7;
+}
+
 .delete-book {
   height: 30px;
   width: 30px;

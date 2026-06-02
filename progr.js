@@ -36,12 +36,14 @@ function addBookToApp(book) {
   newBook.id = 'id_' + book.id;
   newBook.className = 'book';
 
+  let newCover = document.createElement("img");
   if (book.cover != '') {
-    let newCover = document.createElement("img");
     newCover.setAttribute('src', book.cover);
-    newCover.className = 'book-cover';
-    newBook.appendChild(newCover);
+  } else {
+    newCover.setAttribute('src', './img/empty-cover.jpg');
   }
+  newCover.className = 'book-cover';
+  newBook.appendChild(newCover);
 
   let newTitle = document.createElement("p");
   newTitle.textContent = book.title;
@@ -68,6 +70,10 @@ function addBookToApp(book) {
   newRating.setAttribute('data-book-id', book.id);
   newRating.hidden = !book.isRead;
 
+  let newGenre = document.createElement("p");
+  newGenre.className = 'book-genre';
+  newGenre.textContent = book.genre;
+
   let btnDeleteBook = document.createElement("img");
   btnDeleteBook.setAttribute('src', './img/trash.svg');
   btnDeleteBook.setAttribute('data-book-id', book.id);
@@ -78,6 +84,7 @@ function addBookToApp(book) {
   newBook.appendChild(newPages);
   newBook.appendChild(btnToggleRead);
   newBook.appendChild(newRating);
+  newBook.appendChild(newGenre);
   newBook.appendChild(btnDeleteBook);
   bookshelf.appendChild(newBook);
 }
