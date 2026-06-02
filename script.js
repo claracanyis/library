@@ -1,4 +1,10 @@
-const myLibrary = [];
+const myLibrary = [
+  new Book('Fourth Wing', 'Rebecca Yarros', 512, true, 'Romantasy', 5, 'https://m.media-amazon.com/images/I/910CEJ3IFWL.jpg'),
+  new Book('Piranesi', 'Susanna Clarke', 272, true, 'Fantasy', 5, 'https://m.media-amazon.com/images/I/51-9a+EtpkL._SY445_SX342_ML2_.jpg'),
+  new Book('Project Hail Mary', 'Andy Weir', 496, true, 'Science-fiction', 5, 'https://m.media-amazon.com/images/I/51-1T3EnODL._SY445_SX342_ML2_.jpg'),
+  new Book('I am Malala', 'Malala Yousafzai', 288, true, 'Autobiographical', 5, 'https://m.media-amazon.com/images/I/41WIXL2+4+L._SY445_SX342_ML2_.jpg'),
+  new Book('Glucose Revolution', 'Jessie Inchauspé', 320, true, 'non-fiction', 3, 'https://m.media-amazon.com/images/I/41rvvtnv8YL._SY445_SX342_ML2_.jpg')
+];
 const bookshelf = document.querySelector(".bookshelf");
 const dialogAddBook = document.querySelector('#add-book');
 const newBookForm = document.querySelector("#new-book-form");
@@ -23,11 +29,21 @@ function Book(title, author, pages, isRead, genre, rating, cover) {
 function addBookToLibrary(title, author, pages, isRead, rating = 0, cover = '', comments = '') {
   const newBook = new Book(title, author, pages, isRead, rating, cover, comments);
   myLibrary.unshift(newBook);
+  console.log('Book ' + newBook.title + ' added to myLibrary');
+  updateApp(myLibrary);
 }
 
-function addArrayToApp(array) {
+function deleteBookFromLibrary(book) {
+  myLibrary.splice(myLibrary.indexOf(book),1);
+  console.log('Book ' + book.title + ' by ' + book.author + ' has been deleted');
+  updateApp(myLibrary);
+}
+
+function updateApp(array) {
+  clearBookshelf(bookshelf);
   for (let book of myLibrary) {
     addBookToApp(book);
+    console.log('Book ' + book.title + ' by ' + book.author + ' added to bookshelf');
   }
 }
 
@@ -89,6 +105,24 @@ function addBookToApp(book) {
   bookshelf.appendChild(newBook);
 }
 
+function clearBookshelf(bookshelf) {
+  const books = document.querySelectorAll(".book");
+  for (let book of books) {
+    book.remove();
+  } 
+  console.log('Bookshelf emptied');
+}
+
+function toggleReadStatus(book) {
+  book.isRead = !book.isRead;
+  console.log('Book ' + book.title + ' by ' + book.author + ' has changed reading status');
+}
+
+function changeRating(book, value) {
+  book.rating = (typeof value === 'string') ? parseInt(value) : value;
+  console.log('Book ' + book.title + ' by ' + book.author + ' has been rated ' + book.rating + ' stars');
+}
+
 bookshelf.addEventListener('click', appInteraction);
 
 function appInteraction(event) {
@@ -96,27 +130,16 @@ function appInteraction(event) {
   const targetBook = myLibrary.find(book => book.id === bookID);
   switch(event.target.className) {
     case 'delete-book':  
-      myLibrary.splice(myLibrary.indexOf(targetBook),1);
-      document.querySelector("#id_" + bookID).remove();
+      deleteBookFromLibrary(targetBook);
       break;
     case 'toggle-read':
-      targetBook.isRead = !targetBook.isRead;
-      event.target.textContent = targetBook.isRead ? 'Read' : 'To Read';
-      event.target.setAttribute('data-style', targetBook.isRead ? 'book-read' : 'book-toread');
-      const rating = document.querySelector("#id_" + bookID).querySelector("input[type=range]");
-      rating.hidden = !targetBook.isRead;
+      toggleReadStatus(targetBook);
+      updateApp(myLibrary);
       break;
     case 'book-rating':
-      targetBook.rating = parseInt(event.target.value);
+      changeRating(targetBook, event.target.value);
       break;
   }
-}
-
-function clearBookshelf() {
-  const books = document.querySelectorAll(".book");
-  for (let book of books) {
-    book.remove();
-  } 
 }
 
 btnAddBook.addEventListener('click', function(event) {
@@ -141,8 +164,6 @@ newBookForm.addEventListener('submit', function(event) {
     formData.get("cover")
   );
   
-  clearBookshelf();
-  addArrayToApp(myLibrary);
   dialogAddBook.close();
 })
 
@@ -150,11 +171,4 @@ dialogAddBook.addEventListener('close', function(event) {
   newBookForm.reset();
 })
 
-addBookToLibrary('Fourth Wing', 'Rebecca Yarros', 512, true, 'Romantasy', 5, 'https://m.media-amazon.com/images/I/910CEJ3IFWL.jpg');
-addBookToLibrary('Piranesi', 'Susanna Clarke', 272, true, 'Fantasy', 5, 'https://m.media-amazon.com/images/I/51-9a+EtpkL._SY445_SX342_ML2_.jpg');
-addBookToLibrary('Project Hail Mary', 'Andy Weir', 496, true, 'Science-fiction', 5, 'https://m.media-amazon.com/images/I/51-1T3EnODL._SY445_SX342_ML2_.jpg');
-addBookToLibrary('I am Malala', 'Malala Yousafzai', 288, true, 'Autobiographical', 5, 'https://m.media-amazon.com/images/I/41WIXL2+4+L._SY445_SX342_ML2_.jpg');
-addBookToLibrary('Glucose Revolution', 'Jessie Inchauspé', 320, true, 'non-fiction', 3, 'https://m.media-amazon.com/images/I/41rvvtnv8YL._SY445_SX342_ML2_.jpg');
-
-console.log(myLibrary);
-addArrayToApp(myLibrary);
+updateApp(myLibrary);
