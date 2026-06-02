@@ -52,6 +52,12 @@ function addBookToApp(book) {
   let newPages = document.createElement("p");
   newPages.textContent = book.pages + ' pages';
 
+  let btnToggleRead = document.createElement("button");
+  btnToggleRead.className = 'toggle-read';
+  btnToggleRead.textContent = book.isRead ? 'Read' : 'To Read';
+  btnToggleRead.setAttribute('data-style', book.isRead ? 'book-read' : 'book-toread');
+  btnToggleRead.setAttribute('data-book-id', book.id);
+
   let btnDeleteBook = document.createElement("img");
   btnDeleteBook.setAttribute('src', './img/trash.svg');
   btnDeleteBook.setAttribute('data-book-id', book.id);
@@ -60,21 +66,25 @@ function addBookToApp(book) {
   newBook.appendChild(newTitle);
   newBook.appendChild(newAuthor);
   newBook.appendChild(newPages);
+  newBook.appendChild(btnToggleRead);
   newBook.appendChild(btnDeleteBook);
   bookshelf.appendChild(newBook);
 }
 
 bookshelf.addEventListener('click', appInteraction);
+
 function appInteraction(event) {
+  const bookID = event.target.getAttribute('data-book-id');
+  const targetBook = myLibrary.find(book => book.id === bookID);
   switch(event.target.className) {
-    case 'delete-book':
-      const bookID = event.target.getAttribute('data-book-id');
-      const targetBook = myLibrary.find(book => book.id === bookID);
+    case 'delete-book':  
       myLibrary.splice(myLibrary.indexOf(targetBook),1);
       document.querySelector("#id_" + bookID).remove();
       break;
     case 'toggle-read':
-      console.log('I toggle the property isRead from this book');
+      targetBook.isRead = !targetBook.isRead;
+      event.target.textContent = targetBook.isRead ? 'Read' : 'To Read';
+      event.target.setAttribute('data-style', targetBook.isRead ? 'book-read' : 'book-toread');
       break;
   }
 }
