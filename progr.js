@@ -58,6 +58,16 @@ function addBookToApp(book) {
   btnToggleRead.setAttribute('data-style', book.isRead ? 'book-read' : 'book-toread');
   btnToggleRead.setAttribute('data-book-id', book.id);
 
+  let newRating = document.createElement("input");
+  newRating.className = 'book-rating';
+  newRating.setAttribute('type', 'range');
+  newRating.setAttribute('min', 1);
+  newRating.setAttribute('max', 5);
+  newRating.setAttribute('step', 1);
+  newRating.setAttribute('value', book.rating);
+  newRating.setAttribute('data-book-id', book.id);
+  newRating.hidden = !book.isRead;
+
   let btnDeleteBook = document.createElement("img");
   btnDeleteBook.setAttribute('src', './img/trash.svg');
   btnDeleteBook.setAttribute('data-book-id', book.id);
@@ -67,6 +77,7 @@ function addBookToApp(book) {
   newBook.appendChild(newAuthor);
   newBook.appendChild(newPages);
   newBook.appendChild(btnToggleRead);
+  newBook.appendChild(newRating);
   newBook.appendChild(btnDeleteBook);
   bookshelf.appendChild(newBook);
 }
@@ -85,6 +96,11 @@ function appInteraction(event) {
       targetBook.isRead = !targetBook.isRead;
       event.target.textContent = targetBook.isRead ? 'Read' : 'To Read';
       event.target.setAttribute('data-style', targetBook.isRead ? 'book-read' : 'book-toread');
+      const rating = document.querySelector("#id_" + bookID).querySelector("input[type=range]");
+      rating.hidden = !targetBook.isRead;
+      break;
+    case 'book-rating':
+      targetBook.rating = parseInt(event.target.value);
       break;
   }
 }
@@ -131,7 +147,7 @@ addBookToLibrary('Fourth Wing', 'Rebecca Yarros', 512, true, 'Romantasy', 5, 'ht
 addBookToLibrary('Piranesi', 'Susanna Clarke', 272, true, 'Fantasy', 5, 'https://m.media-amazon.com/images/I/51-9a+EtpkL._SY445_SX342_ML2_.jpg');
 addBookToLibrary('Project Hail Mary', 'Andy Weir', 496, true, 'Science-fiction', 5, 'https://m.media-amazon.com/images/I/51-1T3EnODL._SY445_SX342_ML2_.jpg');
 addBookToLibrary('I am Malala', 'Malala Yousafzai', 288, true, 'Autobiographical', 5, 'https://m.media-amazon.com/images/I/41WIXL2+4+L._SY445_SX342_ML2_.jpg');
-addBookToLibrary('Glucose Revolution', 'Jessie Inchauspé', 320, true, 'non-fiction', 5, 'https://m.media-amazon.com/images/I/41rvvtnv8YL._SY445_SX342_ML2_.jpg');
+addBookToLibrary('Glucose Revolution', 'Jessie Inchauspé', 320, true, 'non-fiction', 3, 'https://m.media-amazon.com/images/I/41rvvtnv8YL._SY445_SX342_ML2_.jpg');
 
 console.log(myLibrary);
 addArrayToApp(myLibrary);
