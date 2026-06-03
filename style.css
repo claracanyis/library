@@ -36,6 +36,18 @@ header {
   text-align: center;
 }
 
+.shelf-selector {
+  font-family: 'Roboto', Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px 40px;
+}
+
+.shelf-selector > label {
+  margin-right: 20px;
+}
+
 #btn-add-book {
   height: 80px;
   width: 80px;
@@ -43,7 +55,7 @@ header {
   border: none;
   background-color: var(--secondary-color);
   position: relative;
-  top: 20px;
+  top: -30px;
 }
 
 #btn-add-book:hover {

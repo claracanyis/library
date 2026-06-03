@@ -3,13 +3,14 @@ const myLibrary = [
   new Book('Piranesi', 'Susanna Clarke', 272, true, 'Fantasy', 5, 'https://m.media-amazon.com/images/I/51-9a+EtpkL._SY445_SX342_ML2_.jpg'),
   new Book('Project Hail Mary', 'Andy Weir', 496, true, 'Science-fiction', 5, 'https://m.media-amazon.com/images/I/51-1T3EnODL._SY445_SX342_ML2_.jpg'),
   new Book('I am Malala', 'Malala Yousafzai', 288, true, 'Autobiographical', 5, 'https://m.media-amazon.com/images/I/41WIXL2+4+L._SY445_SX342_ML2_.jpg'),
-  new Book('Glucose Revolution', 'Jessie Inchauspé', 320, true, 'non-fiction', 3, 'https://m.media-amazon.com/images/I/41rvvtnv8YL._SY445_SX342_ML2_.jpg')
+  new Book('Glucose Revolution', 'Jessie Inchauspé', 320, true, 'Non-fiction', 3, 'https://m.media-amazon.com/images/I/41rvvtnv8YL._SY445_SX342_ML2_.jpg')
 ];
 const bookshelf = document.querySelector(".bookshelf");
 const dialogAddBook = document.querySelector('#add-book');
 const newBookForm = document.querySelector("#new-book-form");
 const btnCloseDialog = document.querySelector('#close-dialog');
 const btnAddBook = document.querySelector('#btn-add-book');
+const selectGenre = document.querySelector('#books-genre-selector');
 
 
 function Book(title, author, pages, isRead, genre, rating, cover) {
@@ -123,9 +124,7 @@ function changeRating(book, value) {
   console.log('Book ' + book.title + ' by ' + book.author + ' has been rated ' + book.rating + ' stars');
 }
 
-bookshelf.addEventListener('click', appInteraction);
-
-function appInteraction(event) {
+function appBookInteraction(event) {
   const bookID = event.target.getAttribute('data-book-id');
   const targetBook = myLibrary.find(book => book.id === bookID);
   switch(event.target.className) {
@@ -142,15 +141,7 @@ function appInteraction(event) {
   }
 }
 
-btnAddBook.addEventListener('click', function(event) {
-  dialogAddBook.showModal();
-})
-
-btnCloseDialog.addEventListener('click', function(event) {
-  dialogAddBook.close();
-})
-
-newBookForm.addEventListener('submit', function(event) {
+function appFormManager(event) {
   event.preventDefault();
   const formData = new FormData(event.currentTarget);
 
@@ -165,10 +156,57 @@ newBookForm.addEventListener('submit', function(event) {
   );
   
   dialogAddBook.close();
+}
+
+function appBookshelfSelectedGenre(event) {
+  const books = document.querySelectorAll('.book');
+  books.forEach((book) => {
+    const bookGenre = book.querySelector('.book-genre');
+    switch (event.target.value) {
+      case 'All':
+        book.hidden = false;
+        break;
+      case 'Fiction':
+        if (bookGenre.textContent === 'Non-fiction' || bookGenre.textContent === 'Autobiographical' || bookGenre.textContent === 'Self-improve') {
+          book.hidden = true;
+        } else {
+          book.hidden = false;
+        }
+        break;
+      case 'Non-fiction':
+         if (bookGenre.textContent === 'Non-fiction' || bookGenre.textContent === 'Autobiographical' || bookGenre.textContent === 'Self-improve') {
+          book.hidden = false;
+        } else {
+          book.hidden = true;
+        }
+        break;
+      default:
+        if (bookGenre.textContent === event.target.value) {
+          book.hidden = false;
+        } else {
+          book.hidden = true;
+        }
+    }   
+  })
+}
+
+// Event listeners
+bookshelf.addEventListener('click', appBookInteraction);
+
+btnAddBook.addEventListener('click', function(event) {
+  dialogAddBook.showModal();
 })
+
+btnCloseDialog.addEventListener('click', function(event) {
+  dialogAddBook.close();
+})
+
+newBookForm.addEventListener('submit', appFormManager)
 
 dialogAddBook.addEventListener('close', function(event) {
   newBookForm.reset();
 })
+
+selectGenre.addEventListener('change', appBookshelfSelectedGenre);
 
 updateApp(myLibrary);
